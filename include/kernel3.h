@@ -13,6 +13,7 @@
 #define _KNL3_H_
 
 #include "utils.h"
+#include <arm_neon.h>
 
 #define A(i,j) A[(i)*LDA+(j)]
 #define B(i,j) B[(i)*LDB+(j)]
