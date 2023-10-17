@@ -12,9 +12,11 @@
 #ifndef _KNL1_H_
 #define _KNL1_H_
 
-#define A(i,j) A[(i)+(j)*LDA]
-#define B(i,j) B[(i)+(j)*LDB]
-#define C(i,j) C[(i)+(j)*LDC]
+#include "utils.h"
+
+#define A(i,j) A[(i)*LDA+(j)]
+#define B(i,j) B[(i)*LDB+(j)]
+#define C(i,j) C[(i)*LDC+(j)]
 
 void scale_c_k1(double *C,int M, int N, int LDC, double scalar){
     int i,j;
@@ -31,7 +33,7 @@ void dummy_cpu_v1(int M, int N, int K, double alpha, double *A, int LDA, double 
     for (i=0;i<M;i++){
         for (j=0;j<N;j++){
             for (k=0;k<K;k++){
-                C(i,j) += alpha*A(i,k)*B(k,j);
+                C(i,j) += alpha*wierdMul(A(i,k), B(k,j));
             }
         }
     }

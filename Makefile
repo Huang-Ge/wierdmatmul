@@ -5,12 +5,12 @@ CPPFLAGS = $(INCLUDES)
 OBJS = test.o utils.o
 CFLAGS = -pthread -Wall $(CPPFLAGS)
 
-all: allKernal
+all: allKernel
 
-allKernal: $(OBJS)
+allKernel: $(OBJS)
 	$(CC) $(CFLAGS) -o $@ $(OBJS)
 # allKernal.o philmain.o $(LIBS)
 
 
 clean:
-	rm -f allKernal $(OBJS)
+	rm -f allKernel $(OBJS)
