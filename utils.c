@@ -100,12 +100,17 @@ void test_dummy_v4(int m,int n,int k,double alpha,double *A,double *B,double bet
     dummy_cpu_v4(m,n,k,alpha,A,m,B,k,beta,C,m);
 }
 
+void test_dummy_v5(int m,int n,int k,double alpha,double *A,double *B,double beta,double *C){
+    mydgemm_cpu_opt_k5(m,n,k,alpha,A,m,B,k,beta,C,m);
+}
+
 void test_kernel(int kernel_num,int m,int n,int k,double alpha,double *A,double *B,double beta,double *C){
     switch (kernel_num){
         case 1: test_dummy_v1(m,n,k,alpha,A,B,beta,C); break;
         case 2: test_dummy_v2(m,n,k,alpha,A,B,beta,C); break;
         case 3: test_dummy_v3(m,n,k,alpha,A,B,beta,C); break;
         case 4: test_dummy_v4(m,n,k,alpha,A,B,beta,C); break;
+        case 5: test_dummy_v5(m,n,k,alpha,A,B,beta,C); break;
         default: printf("ERROR: no such kernel.\n");
         break;
     }
