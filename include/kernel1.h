@@ -14,9 +14,9 @@
 
 #include "utils.h"
 
-#define A(i,j) A[(i)*LDA+(j)]
-#define B(i,j) B[(i)*LDB+(j)]
-#define C(i,j) C[(i)*LDC+(j)]
+#define A(i,j) A[(i)+(j)*LDA]
+#define B(i,j) B[(i)+(j)*LDB]
+#define C(i,j) C[(i)+(j)*LDC]
 
 void scale_c_k1(double *C,int M, int N, int LDC, double scalar){
     int i,j;

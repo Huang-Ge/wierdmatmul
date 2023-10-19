@@ -2,9 +2,9 @@
 #include <arm_neon.h>
 #include "utils.h"
 
-#define A(i,j) A[(i)*LDA+(j)]
-#define B(i,j) B[(i)*LDB+(j)]
-#define C(i,j) C[(i)*LDC+(j)]
+#define A(i,j) A[(i)+(j)*LDA]
+#define B(i,j) B[(i)+(j)*LDB]
+#define C(i,j) C[(i)+(j)*LDC]
 
 void scale_c_k5(double *C, int M, int N, int LDC, double scalar) {
     int i, j;
@@ -39,8 +39,8 @@ void mydgemm_cpu_v5(int M, int N, int K, double alpha, double *A, int LDA, doubl
             float64x2_t c0 = vdupq_n_f64(0.0);
             float64x2_t c1 = vdupq_n_f64(0.0);
             for (k = 0; k < K; k++) {
-                // float64x2_t a = vmulq_f64(valpha, vld1q_f64(&A(i, k)));
-                float64x2_t a = vdupq_n_f64(A(i, k));
+                float64x2_t a = vmulq_f64(valpha, vld1q_f64(&A(i, k)));
+                // float64x2_t a = vdupq_n_f64(A(i, k));
                 float64x2_t b0 = vdupq_n_f64(B(k, j));
                 float64x2_t b1 = vdupq_n_f64(B(k, j + 1));
                 // calculate difference

@@ -101,7 +101,41 @@ void test_dummy_v4(int m,int n,int k,double alpha,double *A,double *B,double bet
 }
 
 void test_dummy_v5(int m,int n,int k,double alpha,double *A,double *B,double beta,double *C){
-    mydgemm_cpu_opt_k5(m,n,k,alpha,A,m,B,k,beta,C,m);
+    mydgemm_cpu_v5(m,n,k,alpha,A,m,B,k,beta,C,m);
+}
+
+void test_dummy_v6(int m,int n,int k,double alpha,double *A,double *B,double beta,double *C){
+    mydgemm_cpu_v6(m,n,k,alpha,A,m,B,k,beta,C,m);
+}
+
+void test_dummy_v7(int m,int n,int k,double alpha,double *A,double *B,double beta,double *C){
+    //TODO:: change the name of the function
+    mydgemm_cpu_v7(m,n,k,alpha,A,m,B,k,beta,C,m);
+}
+
+void test_dummy_v8(int m,int n,int k,double alpha,double *A,double *B,double beta,double *C){
+    //TODO:: change the name of the function
+    mydgemm_cpu_opt_k6(m,n,k,alpha,A,m,B,k,beta,C,m);
+}
+
+void test_dummy_v9(int m,int n,int k,double alpha,double *A,double *B,double beta,double *C){
+    //TODO:: change the name of the function
+    mydgemm_cpu_opt_k6(m,n,k,alpha,A,m,B,k,beta,C,m);
+}
+
+void test_dummy_v10(int m,int n,int k,double alpha,double *A,double *B,double beta,double *C){
+    //TODO:: change the name of the function
+    mydgemm_cpu_opt_k6(m,n,k,alpha,A,m,B,k,beta,C,m);
+}
+
+void test_dummy_v11(int m,int n,int k,double alpha,double *A,double *B,double beta,double *C){
+    //TODO:: change the name of the function
+    mydgemm_cpu_opt_k6(m,n,k,alpha,A,m,B,k,beta,C,m);
+}
+
+void test_dummy_v12(int m,int n,int k,double alpha,double *A,double *B,double beta,double *C){
+    //TODO:: change the name of the function
+    mydgemm_cpu_opt_k6(m,n,k,alpha,A,m,B,k,beta,C,m);
 }
 
 void test_kernel(int kernel_num,int m,int n,int k,double alpha,double *A,double *B,double beta,double *C){
@@ -111,6 +145,13 @@ void test_kernel(int kernel_num,int m,int n,int k,double alpha,double *A,double 
         case 3: test_dummy_v3(m,n,k,alpha,A,B,beta,C); break;
         case 4: test_dummy_v4(m,n,k,alpha,A,B,beta,C); break;
         case 5: test_dummy_v5(m,n,k,alpha,A,B,beta,C); break;
+        case 6: test_dummy_v6(m,n,k,alpha,A,B,beta,C); break;
+        case 7: test_dummy_v7(m,n,k,alpha,A,B,beta,C); break;
+        case 8: test_dummy_v8(m,n,k,alpha,A,B,beta,C); break;
+        case 9: test_dummy_v9(m,n,k,alpha,A,B,beta,C); break;
+        case 10: test_dummy_v10(m,n,k,alpha,A,B,beta,C); break;
+        case 11: test_dummy_v11(m,n,k,alpha,A,B,beta,C); break;
+        case 12: test_dummy_v12(m,n,k,alpha,A,B,beta,C); break;
         default: printf("ERROR: no such kernel.\n");
         break;
     }
