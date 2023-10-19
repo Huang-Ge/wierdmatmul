@@ -8,5 +8,6 @@
 #include "./include/kernel5.h"
 #include "./include/kernel6.h"
 #include "./include/kernel7.h"
+#include "./include/kernel8.h"
 
 #endif // _KNLS_H_

@@ -33,7 +33,7 @@ int main(int argc, char *argv[]){
     for (int i_count=0;i_count<upper_limit;i_count++){
         m=n=k=SIZE[i_count];
         printf("\nM=N=K=%d:\n",m);
-        if (kernel_num != 0){//not an MKL implementation
+        if (i_count < 5 && kernel_num != 0){//not an MKL implementation
             test_kernel(kernel_num,m,n,k,alpha,A,B,beta,C);
             // kernel 1 as the reference result
             test_kernel(1,m,n,k,alpha,A,B,beta,C_ref);

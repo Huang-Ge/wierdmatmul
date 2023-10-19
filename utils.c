@@ -115,7 +115,7 @@ void test_dummy_v7(int m,int n,int k,double alpha,double *A,double *B,double bet
 
 void test_dummy_v8(int m,int n,int k,double alpha,double *A,double *B,double beta,double *C){
     //TODO:: change the name of the function
-    mydgemm_cpu_opt_k7(m,n,k,alpha,A,m,B,k,beta,C,m);
+    mydgemm_cpu_v8(m,n,k,alpha,A,m,B,k,beta,C,m);
 }
 
 void test_dummy_v9(int m,int n,int k,double alpha,double *A,double *B,double beta,double *C){
