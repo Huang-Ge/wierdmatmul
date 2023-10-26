@@ -17,6 +17,9 @@ int main(int argc, char *argv[]){
         printf("Please enter a valid kernel number (0-19).\n");
         exit(-2);
     }
+    else {
+        printf("Testing kernel NO %d.\n", kernel_num);
+    }
     int m, n, k,max_size=3000;
     int n_count,N=3,upper_limit;
     if (kernel_num<=4&&kernel_num!=0) upper_limit=10;
@@ -30,6 +33,8 @@ int main(int argc, char *argv[]){
     C_ref=(double *)malloc(sizeof(double)*max_size*max_size);
 
     randomize_matrix(A,max_size,max_size);randomize_matrix(B,max_size,max_size);randomize_matrix(C,max_size,max_size);copy_matrix(C,C_ref,max_size*max_size);
+    // test average data
+    double avg_GFLOPS = 0;
     for (int i_count=0;i_count<upper_limit;i_count++){
         m=n=k=SIZE[i_count];
         printf("\nM=N=K=%d:\n",m);
@@ -48,9 +53,14 @@ int main(int argc, char *argv[]){
             test_kernel(kernel_num,m,n,k,alpha,A,B,beta,C);
         }
         t1=get_sec();
-        printf("Average elasped time: %f second, performance: %f GFLOPS.\n", (t1-t0)/N,2.*1e-9*N*m*n*k/(t1-t0));
+        double cur_GFLOPS = 2.*1e-9*N*m*n*k/(t1-t0);
+        // update average GFLOPS
+        avg_GFLOPS = (avg_GFLOPS * i_count + cur_GFLOPS) / (i_count + 1);
+        printf("Average elasped time: %f second, performance: %f GFLOPS.\n", (t1-t0)/N, cur_GFLOPS);
+        if (i_count == 9) printf("Average performance for the first 10 runs: %f GFLOPS.\n", avg_GFLOPS);
         copy_matrix(C_ref,C,m*n);//sync C with Intel MKl to prepare for the next run
     }
+    printf("Average performance for all runs: %f GFLOPS.\n", avg_GFLOPS);
     free(A);free(B);free(C);free(C_ref);
     return 0;
 }
