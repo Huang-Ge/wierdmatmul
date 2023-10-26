@@ -37,7 +37,7 @@ Since the task is to accelarate the calculation as fast as possible locally, sta
   - 4 x 4 kernel + cache blocking 
   - Average performance: **1.184126 GFLOPS** (which maintains when scaled up)
 - Kernel 9
-  - 8 x 8 kernel
+  - 8 x 8 kernel +loop unrolling x 4 + cache blocking 
   - Average performance: **1.409902 GFLOPS**
 - Kernel 10
   - Although NEON wasn't performing as expected, we are still gonna try packing out here
