@@ -21,7 +21,7 @@
 #define N_BLOCKING 2048
 #define K_BLOCKING 384
 
-void scale_c_k8(double *C,int M, int N, int LDC, double scalar){
+void scale_c_k9(double *C,int M, int N, int LDC, double scalar){
     int i,j;
     for (i=0;i<M;i++){
         for (j=0;j<N;j++){
@@ -30,9 +30,9 @@ void scale_c_k8(double *C,int M, int N, int LDC, double scalar){
     }
 }
 
-void mydgemm_cpu_opt_k8(int M, int N, int K, double alpha, double *A, int LDA, double *B, int LDB, double beta, double *C, int LDC){
+void mydgemm_cpu_opt_k9(int M, int N, int K, double alpha, double *A, int LDA, double *B, int LDB, double beta, double *C, int LDC){
     int i,j,k;
-    if (beta != 1.0) scale_c_k8(C,M,N,LDC,beta);
+    if (beta != 1.0) scale_c_k9(C,M,N,LDC,beta);
     for (i=0;i<M;i++){
         for (j=0;j<N;j++){
             double tmp=C(i,j);
@@ -44,9 +44,9 @@ void mydgemm_cpu_opt_k8(int M, int N, int K, double alpha, double *A, int LDA, d
     }
 }
 
-void macro_dummy_cpu_v8(int M, int N, int K, double alpha, double *A, int LDA, double *B, int LDB, double *C, int LDC){
+void macro_dummy_cpu_v9(int M, int N, int K, double alpha, double *A, int LDA, double *B, int LDB, double *C, int LDC){
     int i,j,k;
-    // if (beta != 1.0) scale_c_k8(C,M,N,LDC,beta);
+    // if (beta != 1.0) scale_c_k9(C,M,N,LDC,beta);
     int M4=M&-4,N4=N&-4;
     for (i=0;i<M4;i+=4){
         for (j=0;j<N4;j+=4){
@@ -112,13 +112,13 @@ void macro_dummy_cpu_v8(int M, int N, int K, double alpha, double *A, int LDA, d
     }
     if (M4==M&&N4==N) return;
     // boundary conditions
-    if (M4!=M) mydgemm_cpu_opt_k8(M-M4,N,K,alpha,A+M4,LDA,B,LDB,1.0,&C(M4,0),LDC);
-    if (N4!=N) mydgemm_cpu_opt_k8(M4,N-N4,K,alpha,A,LDA,&B(0,N4),LDB,1.0,&C(0,N4),LDC);
+    if (M4!=M) mydgemm_cpu_opt_k9(M-M4,N,K,alpha,A+M4,LDA,B,LDB,1.0,&C(M4,0),LDC);
+    if (N4!=N) mydgemm_cpu_opt_k9(M4,N-N4,K,alpha,A,LDA,&B(0,N4),LDB,1.0,&C(0,N4),LDC);
 }
 
-void mydgemm_cpu_v8(int M, int N, int K, double alpha, double *A, int LDA, double *B, int LDB, double beta, double *C, int LDC){
+void mydgemm_cpu_v9(int M, int N, int K, double alpha, double *A, int LDA, double *B, int LDB, double beta, double *C, int LDC){
     
-    if (beta != 1.0) scale_c_k8(C,M,N,LDC,beta);
+    if (beta != 1.0) scale_c_k9(C,M,N,LDC,beta);
     
     int m_count, n_count, k_count;
     int m_inc, n_inc, k_inc;
@@ -129,7 +129,7 @@ void mydgemm_cpu_v8(int M, int N, int K, double alpha, double *A, int LDA, doubl
             for (m_count=0;m_count<M;m_count+=m_inc){
                 m_inc = (M-m_count>M_BLOCKING)?M_BLOCKING:N-m_count;
                 //macro kernel: to compute C += A_tilt * B_tilt
-                macro_dummy_cpu_v8(m_inc,n_inc,k_inc,alpha,&A(m_count,k_count), LDA, &B(k_count,n_count), LDB, &C(m_count, n_count), LDC);
+                macro_dummy_cpu_v9(m_inc,n_inc,k_inc,alpha,&A(m_count,k_count), LDA, &B(k_count,n_count), LDB, &C(m_count, n_count), LDC);
             }
         }
     }
