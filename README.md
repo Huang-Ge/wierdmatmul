@@ -26,10 +26,10 @@ Since the task is to accelarate the calculation as fast as possible locally, sta
   - Average performance: **1.192514 GFLOPS**
 - Kernel 5
   - 2x4 register blocking with *NEON*,  but performance drastically dropped :(
-  - Average performance: 0.439499 GFLOPS
+  - Average performance: **0.439499 GFLOPS**
 - Kernel 6
   - Kernel 5 + loop unrolling x 4, still low performance
-  - Average performance: 0.628501 GFLOPS
+  - Average performance: **0.628501 GFLOPS**
 - Kernel 7
   - 4 x 4 kernel + NEON + loop unrolling x 4
   - Average performance: **0.817736 GFLOPS**
@@ -37,5 +37,8 @@ Since the task is to accelarate the calculation as fast as possible locally, sta
   - 4 x 4 kernel + cache blocking 
   - Average performance: **1.184126 GFLOPS** (which maintains when scaled up)
 - Kernel 9
-  - Kernel 8 + packing
+  - 8 x 8 kernel
+  - Average performance: **1.409902 GFLOPS**
+- Kernel 10
+  - Although NEON wasn't performing as expected, we are still gonna try packing out here
   - Average performance:

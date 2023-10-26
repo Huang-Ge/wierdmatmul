@@ -18,7 +18,7 @@
 #define B(i,j) B[(i)+(j)*LDB]
 #define C(i,j) C[(i)+(j)*LDC]
 #define M_BLOCKING 192
-#define N_BLOCKING 2048
+#define N_BLOCKING 512
 #define K_BLOCKING 384
 
 void scale_c_k8(double *C,int M, int N, int LDC, double scalar){

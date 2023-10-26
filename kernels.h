@@ -12,8 +12,5 @@
 #include "./include/kernel9.h"
 // #include "./include/kernel10.h"
 // #include "./include/kernel11.h"
-// #include "./include/kernel12.h"
-// #include "./include/kernel13.h"
-// #include "./include/kernel14.h"
 
 #endif // _KNLS_H_
