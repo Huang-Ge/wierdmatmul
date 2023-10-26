@@ -6,7 +6,7 @@
 
 int main(int argc, char *argv[]){
     if (argc != 2) {
-        printf("Please select a kernel (range 0 - 19, here 0 is for Intel MKL).\n");
+        printf("Please select a kernel (range 0 - 19).\n");
         exit(-1);
     }
     int SIZE[30]={100,200,300,400,500,600,700,800,900,1000,1100,\
@@ -44,7 +44,7 @@ int main(int argc, char *argv[]){
             test_kernel(1,m,n,k,alpha,A,B,beta,C_ref);
             // cblas_dgemm(CblasColMajor, CblasNoTrans,CblasNoTrans,m,n,k,alpha,A,m,B,k,beta,C_ref,m);
             if (!verify_matrix(C_ref,C,m*n)) {
-                printf("Failed to pass the correctness verification against Intel MKL. Exited.\n");
+                printf("Failed to pass the correctness verification against standard result. Exited.\n");
                 exit(-3);
             }
         }

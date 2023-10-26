@@ -1,4 +1,6 @@
-# Chris Matmul dummy project
+# Matmul dummy project
+
+## Problem Set
 
 Implimentation of a variant of matrix multiplification: $C_{i,j} = \sum_k (A_{i, k} - B_{k,j})^2$.
 
@@ -9,6 +11,28 @@ This project is a onboarding project that tries to accrelarate a special way of 
 Instead of avx used on x86 Intel chips, M1 chip has arm architectured 128-bit register (256-bit in AVX) which can be accessed by using `#include <arm_neon.h>`.  In the local test environment, its performance is texted but the result shows that it is not achieving the performance boost as expected. While the reason is yet to be inspected, the test results are listed below.
 
 Since the task is to accelarate the calculation as fast as possible locally, starting from kernel 8,  furthur ideas of matrix multiplication such as cache blocking are applied to the plain implementation.
+
+## Performance
+
+### Naive Approach
+
+| Kernel # | GFLOPS       | Tricks                                            |
+| -------- | ------------ | ------------------------------------------------- |
+| 1        | 0.537377     | -                                                 |
+| 2        | 0.551714     | Register reuse                                    |
+| 3        | 0.786101     | 2x2 register blocking                             |
+| 4        | 1.192514     | 4x4 register blocking                             |
+| 8        | 1.184126     | 4 x 4 kernel + cache blocking                     |
+| 9        | **1.409902** | 8 x 8 kernel +loop unrolling x 4 + cache blocking |
+
+### NEON (AVX equivelent in arm)
+
+| Kernel # | GFLOPS   | Tricks                                       |
+| -------- | -------- | -------------------------------------------- |
+| 5        | 0.439499 | 2x4 register blocking                        |
+| 6        | 0.628501 | 2x4 register blocking + loop unrolling x 4   |
+| 7        | 0.817736 | 4 x 4 kernel  + loop unrolling x 4           |
+| 10       | 0.846954 | 4 x 4 kernel  + loop unrolling x 4 + packing |
 
 ## Kernel list
 
@@ -40,5 +64,14 @@ Since the task is to accelarate the calculation as fast as possible locally, sta
   - 8 x 8 kernel +loop unrolling x 4 + cache blocking 
   - Average performance: **1.409902 GFLOPS**
 - Kernel 10
-  - Although NEON wasn't performing as expected, we are still gonna try packing out here
-  - Average performance:
+  - <u>Kernel 7</u> + packing. *Although NEON wasn't performing as expected, we are still gonna try packing out here*
+  - Average performance: **0.846954 GFLOPS**
+  - As a result, packing Still didn't do any better
+
+#### Summary
+
+The best I can get so far is 1.409902 GFLOPS. Implementation on NEON isn't working quit as efficient as expected. I stopped going further because it doesn't look like a promising road to accelerate matrix multiplication by imitating AVX using NEON.
+
+### Reference
+
+https://github.com/yzhaiustc/Optimizing-DGEMM-on-Intel-CPUs-with-AVX512F#kernel-10-24x8-kernel--avx512--blocking--packing
